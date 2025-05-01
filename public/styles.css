@@ -305,3 +305,51 @@ footer {
   color: var(--light-text);
   padding: 20px;
 }
+
+/* Admin Section Styles */
+.admin-section {
+  margin-top: 20px;
+}
+
+.admin-controls {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.reset-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.reset-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--text-color);
+  border-radius: 4px;
+}
+
+.btn-danger {
+  background-color: var(--error-color);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #d32f2f;
+}
+
+.reset-message {
+  min-height: 20px;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: #ff6b6b;
+}
+
+.success-message {
+  color: #4caf50;
+}

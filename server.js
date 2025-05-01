@@ -174,6 +174,41 @@ app.put('/api/orders/:id', (req, res) => {
   });
 });
 
+// Admin endpoint to reset all data
+// Caution: this will delete all orders and reset all counts
+app.post('/api/reset', (req, res) => {
+  // Simple "password" protection
+  const resetKey = req.body.key;
+  const expectedKey = 'wedding2025'; // You can change this to any key you prefer
+  
+  if (resetKey !== expectedKey) {
+    return res.status(403).json({ error: 'Invalid reset key' });
+  }
+
+  db.serialize(() => {
+    // Delete all orders
+    db.run(`DELETE FROM orders`, [], (err) => {
+      if (err) {
+        console.error('Error deleting orders:', err.message);
+        return res.status(500).json({ error: 'Error resetting orders' });
+      }
+      
+      // Reset all counts
+      db.run(`UPDATE order_counts SET count = 0`, [], (err) => {
+        if (err) {
+          console.error('Error resetting counts:', err.message);
+          return res.status(500).json({ error: 'Error resetting counts' });
+        }
+        
+        // Notify all clients about the reset
+        io.emit('data-reset');
+        
+        return res.json({ success: true, message: 'All data has been reset' });
+      });
+    });
+  });
+});
+
 // Socket connection
 io.on('connection', (socket) => {
   console.log('New client connected');
@@ -187,4 +222,8 @@ io.on('connection', (socket) => {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`URL: http://localhost:${PORT}`);
+  if (process.env.RAILWAY_STATIC_URL) {
+    console.log(`Railway URL: ${process.env.RAILWAY_STATIC_URL}`);
+  }
 });

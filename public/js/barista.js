@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const completedOrdersContainer = document.getElementById('completed-orders');
     const countsTableBody = document.getElementById('counts-table-body');
     const newOrderSound = document.getElementById('new-order-sound');
+    const resetButton = document.getElementById('reset-button');
+    const resetKey = document.getElementById('reset-key');
+    const resetMessage = document.querySelector('.reset-message');
     
     // Load initial data
     fetchOrders();
@@ -87,6 +90,64 @@ document.addEventListener('DOMContentLoaded', () => {
     
     socket.on('counts-updated', () => {
         fetchOrderCounts();
+    });
+    
+    socket.on('data-reset', () => {
+        // Reset the UI after a data reset
+        fetchOrders();
+        fetchOrderCounts();
+        resetMessage.textContent = 'All data has been reset successfully!';
+        resetMessage.classList.add('success-message');
+        setTimeout(() => {
+            resetMessage.textContent = '';
+            resetMessage.classList.remove('success-message');
+        }, 5000);
+    });
+    
+    // Add reset button event listener
+    resetButton.addEventListener('click', async () => {
+        const key = resetKey.value.trim();
+        
+        if (!key) {
+            resetMessage.textContent = 'Please enter the reset key.';
+            resetMessage.classList.add('error-message');
+            setTimeout(() => {
+                resetMessage.textContent = '';
+                resetMessage.classList.remove('error-message');
+            }, 5000);
+            return;
+        }
+        
+        try {
+            const response = await fetch('/api/reset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ key })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                resetKey.value = ''; // Clear the input field
+            } else {
+                resetMessage.textContent = data.error || 'Error resetting data. Please try again.';
+                resetMessage.classList.add('error-message');
+                setTimeout(() => {
+                    resetMessage.textContent = '';
+                    resetMessage.classList.remove('error-message');
+                }, 5000);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            resetMessage.textContent = 'Server error. Please try again.';
+            resetMessage.classList.add('error-message');
+            setTimeout(() => {
+                resetMessage.textContent = '';
+                resetMessage.classList.remove('error-message');
+            }, 5000);
+        }
     });
     
     // Function to fetch and display orders
