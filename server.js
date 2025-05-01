@@ -140,8 +140,17 @@ app.post('/api/orders', (req, res) => {
       db.run(`UPDATE order_counts SET count = count + 1 WHERE item_name = ?`, [item]);
     });
     
+    // Create full order object for real-time updates
+    const orderData = {
+      id: orderId,
+      order_items: orderItems,
+      timestamp: new Date().toISOString(),
+      status: 'pending'
+    };
+    
     // Notify connected clients about the new order
-    io.emit('new-order', { id: orderId, order_items: orderItems, timestamp: new Date(), status: 'pending' });
+    io.emit('new-order', orderData);
+    console.log('Emitting new order:', orderData);
     
     res.json({ id: orderId, success: true });
   });
@@ -211,10 +220,23 @@ app.post('/api/reset', (req, res) => {
 
 // Socket connection
 io.on('connection', (socket) => {
-  console.log('New client connected');
+  console.log('New client connected:', socket.id);
+  
+  // Send initial data to newly connected clients
+  db.all(`SELECT * FROM orders WHERE status != 'completed' ORDER BY timestamp ASC`, [], (err, orders) => {
+    if (!err && orders && orders.length > 0) {
+      socket.emit('initial-orders', orders);
+      console.log('Sent initial orders to new client:', socket.id);
+    }
+  });
+  
+  // Handle ping to keep connection alive
+  socket.on('ping', () => {
+    socket.emit('pong');
+  });
   
   socket.on('disconnect', () => {
-    console.log('Client disconnected');
+    console.log('Client disconnected:', socket.id);
   });
 });
 

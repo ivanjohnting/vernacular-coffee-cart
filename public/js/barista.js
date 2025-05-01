@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Connect to Socket.io
-    const socket = io();
+    const socket = io({
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000
+    });
     
     // DOM Elements
     const pendingOrdersContainer = document.getElementById('pending-orders');
@@ -10,17 +14,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetButton = document.getElementById('reset-button');
     const resetKey = document.getElementById('reset-key');
     const resetMessage = document.querySelector('.reset-message');
+    const connectionStatus = document.createElement('div');
     
-    // Load initial data
-    fetchOrders();
-    fetchOrderCounts();
+    // Add connection status indicator
+    connectionStatus.className = 'connection-status';
+    document.querySelector('header').appendChild(connectionStatus);
     
-    // Socket events
-    socket.on('new-order', (order) => {
-        // Play sound notification
-        newOrderSound.play();
+    // Socket connection events
+    socket.on('connect', () => {
+        console.log('Connected to server');
+        connectionStatus.textContent = '● Connected';
+        connectionStatus.className = 'connection-status connected';
         
-        // Add the new order to the UI
+        // Load initial data
+        fetchOrders();
+        fetchOrderCounts();
+    });
+    
+    socket.on('disconnect', () => {
+        console.log('Disconnected from server');
+        connectionStatus.textContent = '● Disconnected';
+        connectionStatus.className = 'connection-status disconnected';
+    });
+    
+    socket.on('connect_error', (error) => {
+        console.error('Connection error:', error);
+        connectionStatus.textContent = '● Connection Error';
+        connectionStatus.className = 'connection-status error';
+    });
+    
+    // Implement heartbeat to keep connection alive
+    setInterval(() => {
+        if (socket.connected) {
+            socket.emit('ping');
+        }
+    }, 30000); // Every 30 seconds
+    
+    socket.on('pong', () => {
+        console.log('Heartbeat received');
+    });
+    
+    // Handle initial orders when connecting
+    socket.on('initial-orders', (orders) => {
+        console.log('Received initial orders:', orders);
+        renderOrders(orders);
+    });
+    
+    // Socket events for real-time updates
+    socket.on('new-order', (order) => {
+        console.log('New order received:', order);
+        
+        // Play sound notification
+        newOrderSound.play().catch(err => console.error('Error playing sound:', err));
+        
+        // Create element for the new order
         const orderElement = createOrderElement(order);
         orderElement.classList.add('new-order');
         
@@ -36,9 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             pendingOrdersContainer.appendChild(orderElement);
         }
+        
+        // Update order counts
+        fetchOrderCounts();
     });
     
     socket.on('order-updated', (updatedOrder) => {
+        console.log('Order updated:', updatedOrder);
+        
         // Find and update the order in the UI
         const orderElement = document.querySelector(`.order-card[data-id="${updatedOrder.id}"]`);
         
@@ -155,30 +207,35 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('/api/orders')
             .then(response => response.json())
             .then(orders => {
-                pendingOrdersContainer.innerHTML = '';
-                completedOrdersContainer.innerHTML = '';
-                
-                if (orders.length === 0) {
-                    const emptyMessage = document.createElement('p');
-                    emptyMessage.className = 'empty-message';
-                    emptyMessage.textContent = 'No pending orders.';
-                    pendingOrdersContainer.appendChild(emptyMessage);
-                } else {
-                    orders.forEach(order => {
-                        const orderElement = createOrderElement(order);
-                        pendingOrdersContainer.appendChild(orderElement);
-                    });
-                }
-                
-                // Add empty message to completed orders initially
-                const emptyCompletedMessage = document.createElement('p');
-                emptyCompletedMessage.className = 'empty-message';
-                emptyCompletedMessage.textContent = 'No completed orders.';
-                completedOrdersContainer.appendChild(emptyCompletedMessage);
+                renderOrders(orders);
             })
             .catch(error => {
                 console.error('Error fetching orders:', error);
             });
+    }
+    
+    // Function to render orders
+    function renderOrders(orders) {
+        pendingOrdersContainer.innerHTML = '';
+        completedOrdersContainer.innerHTML = '';
+        
+        if (orders.length === 0) {
+            const emptyMessage = document.createElement('p');
+            emptyMessage.className = 'empty-message';
+            emptyMessage.textContent = 'No pending orders.';
+            pendingOrdersContainer.appendChild(emptyMessage);
+        } else {
+            orders.forEach(order => {
+                const orderElement = createOrderElement(order);
+                pendingOrdersContainer.appendChild(orderElement);
+            });
+        }
+        
+        // Add empty message to completed orders initially
+        const emptyCompletedMessage = document.createElement('p');
+        emptyCompletedMessage.className = 'empty-message';
+        emptyCompletedMessage.textContent = 'No completed orders.';
+        completedOrdersContainer.appendChild(emptyCompletedMessage);
     }
     
     // Function to create order element
@@ -187,7 +244,17 @@ document.addEventListener('DOMContentLoaded', () => {
         orderElement.className = 'order-card';
         orderElement.dataset.id = order.id;
         
-        const orderItems = JSON.parse(order.order_items);
+        // Parse order items if they're a string
+        let orderItems;
+        try {
+            orderItems = typeof order.order_items === 'string' 
+                ? JSON.parse(order.order_items) 
+                : order.order_items;
+        } catch (e) {
+            console.error('Error parsing order items:', e);
+            orderItems = ['Error loading items'];
+        }
+        
         const timestamp = new Date(order.timestamp);
         
         orderElement.innerHTML = `
