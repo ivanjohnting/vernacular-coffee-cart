@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vernacular Coffee Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Vernacular Coffee Cart</h1>
+            <p class="subtitle">Wedding Coffee Service</p>
+        </header>
+
+        <main>
+            <section class="order-section">
+                <h2>New Order</h2>
+                <form id="order-form">
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <input type="checkbox" id="hot-black" name="hot-black" value="Hot Black Coffee">
+                            <label for="hot-black">Hot Black Coffee</label>
+                        </div>
+                        
+                        <div class="menu-item">
+                            <input type="checkbox" id="hot-white" name="hot-white" value="Hot White Coffee">
+                            <label for="hot-white">Hot White Coffee</label>
+                            <div class="milk-option">
+                                <input type="checkbox" id="hot-white-oat" name="hot-white-oat" value="Hot White Coffee (Oat Milk)">
+                                <label for="hot-white-oat">Oat Milk</label>
+                            </div>
+                        </div>
+                        
+                        <div class="menu-item">
+                            <input type="checkbox" id="iced-black" name="iced-black" value="Iced Black Coffee">
+                            <label for="iced-black">Iced Black Coffee</label>
+                        </div>
+                        
+                        <div class="menu-item">
+                            <input type="checkbox" id="iced-white" name="iced-white" value="Iced White Coffee">
+                            <label for="iced-white">Iced White Coffee</label>
+                            <div class="milk-option">
+                                <input type="checkbox" id="iced-white-oat" name="iced-white-oat" value="Iced White Coffee (Oat Milk)">
+                                <label for="iced-white-oat">Oat Milk</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Place Order</button>
+                </form>
+            </section>
+
+            <section class="stats-section">
+                <h2>Order Statistics</h2>
+                <div id="order-counts" class="order-counts">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Coffee Type</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="counts-table-body">
+                            <!-- Counts will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p><a href="/barista" class="barista-link">Barista View</a></p>
+            <p class="copyright">© 2025 Vernacular Coffee Cart</p>
+        </footer>
+    </div>
+
+    <div id="order-confirmation" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Order Placed!</h2>
+            <p>Your order has been sent to the barista.</p>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/order.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barista View - Vernacular Coffee Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="barista-page">
+    <div class="container">
+        <header>
+            <h1>Vernacular Coffee Cart</h1>
+            <p class="subtitle">Barista View</p>
+        </header>
+
+        <main>
+            <section class="orders-section">
+                <h2>Current Orders</h2>
+                <div id="pending-orders" class="orders-container">
+                    <!-- Orders will be populated here -->
+                    <p class="empty-message">No pending orders.</p>
+                </div>
+            </section>
+
+            <section class="completed-section">
+                <h2>Completed Orders</h2>
+                <div id="completed-orders" class="orders-container completed">
+                    <!-- Completed orders will be populated here -->
+                    <p class="empty-message">No completed orders.</p>
+                </div>
+            </section>
+
+            <section class="stats-section">
+                <h2>Order Statistics</h2>
+                <div id="order-counts" class="order-counts">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Coffee Type</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="counts-table-body">
+                            <!-- Counts will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p><a href="/" class="back-link">Order Taking View</a></p>
+            <p class="copyright">© 2025 Vernacular Coffee Cart</p>
+        </footer>
+    </div>
+
+    <audio id="new-order-sound" src="https://cdn.jsdelivr.net/gh/soundjay/Audio/fastchime.mp3"></audio>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/barista.js"></script>
+</body>
+</html>
