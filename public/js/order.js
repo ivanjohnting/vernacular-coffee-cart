@@ -103,30 +103,32 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const orderItems = [];
         
+        // First, check if oat milk variants are selected
+        const hotWhiteOatSelected = document.getElementById('hot-white-oat').checked;
+        const icedWhiteOatSelected = document.getElementById('iced-white-oat').checked;
+        
         // Process each coffee item with quantity
         coffeeItems.forEach(item => {
             const checkbox = document.getElementById(item.id);
             
             if (checkbox.checked) {
-                // Handle special case for oat milk options
-                if ((item.id === 'hot-white-oat' && hotWhiteCheck.checked) || 
-                    (item.id === 'iced-white-oat' && icedWhiteCheck.checked)) {
-                    const qtyInput = document.querySelector(`.quantity-control[data-for="${item.id}"] .qty-input`);
-                    const quantity = parseInt(qtyInput.value);
-                    
-                    // Add multiple instances of the item based on quantity
-                    for (let i = 0; i < quantity; i++) {
-                        orderItems.push(item.name);
-                    }
-                } else if (item.id !== 'hot-white-oat' && item.id !== 'iced-white-oat') {
-                    // Handle regular coffee items
-                    const qtyInput = document.querySelector(`.quantity-control[data-for="${item.id}"] .qty-input`);
-                    const quantity = parseInt(qtyInput.value);
-                    
-                    // Add multiple instances of the item based on quantity
-                    for (let i = 0; i < quantity; i++) {
-                        orderItems.push(item.name);
-                    }
+                // Skip regular hot white coffee if oat milk version is selected
+                if (item.id === 'hot-white' && hotWhiteOatSelected) {
+                    return;
+                }
+                
+                // Skip regular iced white coffee if oat milk version is selected
+                if (item.id === 'iced-white' && icedWhiteOatSelected) {
+                    return;
+                }
+                
+                // Process the item normally
+                const qtyInput = document.querySelector(`.quantity-control[data-for="${item.id}"] .qty-input`);
+                const quantity = parseInt(qtyInput.value);
+                
+                // Add multiple instances of the item based on quantity
+                for (let i = 0; i < quantity; i++) {
+                    orderItems.push(item.name);
                 }
             }
         });
