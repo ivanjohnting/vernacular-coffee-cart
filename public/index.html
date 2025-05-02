@@ -6,7 +6,7 @@
     <title>Vernacular Coffee Cart</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -22,30 +22,68 @@
                 <form id="order-form">
                     <div class="menu-items">
                         <div class="menu-item">
-                            <input type="checkbox" id="hot-black" name="hot-black" value="Hot Black Coffee">
-                            <label for="hot-black">Hot Black Coffee</label>
-                        </div>
-                        
-                        <div class="menu-item">
-                            <input type="checkbox" id="hot-white" name="hot-white" value="Hot White Coffee">
-                            <label for="hot-white">Hot White Coffee</label>
-                            <div class="milk-option">
-                                <input type="checkbox" id="hot-white-oat" name="hot-white-oat" value="Hot White Coffee (Oat Milk)">
-                                <label for="hot-white-oat">Oat Milk</label>
+                            <div class="menu-item-header">
+                                <input type="checkbox" id="hot-black" name="hot-black" value="Hot Black Coffee">
+                                <label for="hot-black">Hot Black Coffee</label>
+                            </div>
+                            <div class="quantity-control" data-for="hot-black">
+                                <button type="button" class="qty-btn qty-decrease">-</button>
+                                <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
+                                <button type="button" class="qty-btn qty-increase">+</button>
                             </div>
                         </div>
                         
                         <div class="menu-item">
-                            <input type="checkbox" id="iced-black" name="iced-black" value="Iced Black Coffee">
-                            <label for="iced-black">Iced Black Coffee</label>
+                            <div class="menu-item-header">
+                                <input type="checkbox" id="hot-white" name="hot-white" value="Hot White Coffee">
+                                <label for="hot-white">Hot White Coffee</label>
+                            </div>
+                            <div class="quantity-control" data-for="hot-white">
+                                <button type="button" class="qty-btn qty-decrease">-</button>
+                                <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
+                                <button type="button" class="qty-btn qty-increase">+</button>
+                            </div>
+                            <div class="milk-option">
+                                <input type="checkbox" id="hot-white-oat" name="hot-white-oat" value="Hot White Coffee (Oat Milk)">
+                                <label for="hot-white-oat">Oat Milk</label>
+                                <div class="quantity-control" data-for="hot-white-oat">
+                                    <button type="button" class="qty-btn qty-decrease">-</button>
+                                    <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
+                                    <button type="button" class="qty-btn qty-increase">+</button>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="menu-item">
-                            <input type="checkbox" id="iced-white" name="iced-white" value="Iced White Coffee">
-                            <label for="iced-white">Iced White Coffee</label>
+                            <div class="menu-item-header">
+                                <input type="checkbox" id="iced-black" name="iced-black" value="Iced Black Coffee">
+                                <label for="iced-black">Iced Black Coffee</label>
+                            </div>
+                            <div class="quantity-control" data-for="iced-black">
+                                <button type="button" class="qty-btn qty-decrease">-</button>
+                                <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
+                                <button type="button" class="qty-btn qty-increase">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <input type="checkbox" id="iced-white" name="iced-white" value="Iced White Coffee">
+                                <label for="iced-white">Iced White Coffee</label>
+                            </div>
+                            <div class="quantity-control" data-for="iced-white">
+                                <button type="button" class="qty-btn qty-decrease">-</button>
+                                <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
+                                <button type="button" class="qty-btn qty-increase">+</button>
+                            </div>
                             <div class="milk-option">
                                 <input type="checkbox" id="iced-white-oat" name="iced-white-oat" value="Iced White Coffee (Oat Milk)">
                                 <label for="iced-white-oat">Oat Milk</label>
+                                <div class="quantity-control" data-for="iced-white-oat">
+                                    <button type="button" class="qty-btn qty-decrease">-</button>
+                                    <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
+                                    <button type="button" class="qty-btn qty-increase">+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,7 +112,7 @@
 
         <footer>
             <p><a href="/barista" class="barista-link">Barista View</a></p>
-            <p class="copyright">© 2025 Vernacular Coffee Cart</p>
+            <p class="copyright"> 2025 Vernacular Coffee Cart</p>
         </footer>
     </div>
 
