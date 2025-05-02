@@ -1,7 +1,7 @@
 :root {
   --primary-color: #1d1d1f;
   --secondary-color: #2d2d2d;
-  --accent-color: #bf9d7e;
+  --accent-color: #2e7d32;
   --text-color: #f5f5f5;
   --light-text: #86868b;
   --border-color: #444;
@@ -167,7 +167,7 @@ section {
 }
 
 .qty-btn:hover {
-  background-color: #a57b5e;
+  background-color: #3e8e41;
   transform: scale(1.05);
 }
 
@@ -225,7 +225,7 @@ section {
 }
 
 .submit-btn:hover {
-  background-color: #a57b5e;
+  background-color: #3e8e41;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
@@ -432,13 +432,13 @@ footer {
   font-weight: 500;
   padding: 8px 16px;
   border-radius: var(--button-radius);
-  background-color: rgba(191, 157, 126, 0.1);
+  background-color: rgba(46, 125, 50, 0.1);
   transition: all 0.3s;
   display: inline-block;
 }
 
 .barista-link:hover, .back-link:hover {
-  background-color: rgba(191, 157, 126, 0.2);
+  background-color: rgba(46, 125, 50, 0.2);
   transform: translateY(-2px);
 }
 
