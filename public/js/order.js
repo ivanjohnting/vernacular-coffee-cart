@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // DOM Elements
     const orderForm = document.getElementById('order-form');
+    const countsTableBody = document.getElementById('counts-table-body');
     const modal = document.getElementById('confirmation-modal');
     const closeModal = document.querySelector('.close');
     
@@ -45,6 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 qtyInput.value = currentValue + 1;
             }
         });
+    });
+    
+    // Load initial order statistics
+    fetchOrderCounts();
+    
+    // Listen for real-time statistics updates
+    socket.on('counts-updated', () => {
+        fetchOrderCounts();
     });
     
     // Form submission handler
@@ -107,6 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 document.getElementById('customer-name').value = '';
                 
+                // Update order statistics
+                fetchOrderCounts();
+                
                 // Show confirmation modal
                 modal.style.display = 'block';
                 
@@ -122,6 +134,35 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('An error occurred while submitting your order. Please try again.');
         }
     });
+    
+    // Function to fetch and display order counts
+    function fetchOrderCounts() {
+        fetch('/api/counts')
+            .then(response => response.json())
+            .then(data => {
+                if (!countsTableBody) return;
+                
+                countsTableBody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    const emptyRow = document.createElement('tr');
+                    emptyRow.innerHTML = '<td colspan="2" class="empty-message">No orders yet</td>';
+                    countsTableBody.appendChild(emptyRow);
+                } else {
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.item_name}</td>
+                            <td>${item.count}</td>
+                        `;
+                        countsTableBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching counts:', error);
+            });
+    }
     
     // Close modal when the x is clicked
     closeModal.addEventListener('click', () => {

@@ -96,8 +96,25 @@
                 </section>
 
                 <section>
-                    <h2>Your Name</h2>
+                    <h2>Customer Name</h2>
                     <input type="text" id="customer-name" name="customerName" placeholder="Enter your name" required>
+                </section>
+
+                <section class="stats-section">
+                    <h2>Order Statistics</h2>
+                    <div id="order-counts" class="order-counts">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Coffee Type</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+                            <tbody id="counts-table-body">
+                                <!-- Counts will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
 
                 <button type="submit" class="submit-btn">Place Order</button>
