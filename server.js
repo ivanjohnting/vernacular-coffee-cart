@@ -92,7 +92,18 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 // Routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  console.log('Health check endpoint accessed');
+  res.send('Vernacular Coffee Cart API is running');
+});
+
+app.get('/api/health', (req, res) => {
+  console.log('Health API endpoint accessed');
+  res.json({ 
+    status: 'healthy',
+    environment: process.env.NODE_ENV,
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString()
+  });
 });
 
 app.get('/barista', (req, res) => {
