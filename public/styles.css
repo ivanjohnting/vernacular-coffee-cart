@@ -100,6 +100,12 @@ section {
   position: relative;
 }
 
+.menu-item-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 .menu-item input[type="checkbox"] {
   margin-right: 10px;
 }
@@ -107,6 +113,65 @@ section {
 .menu-item label {
   font-size: 1.1rem;
   font-weight: 500;
+}
+
+/* Quantity Control Styles */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 30px;
+  margin-top: 8px;
+  max-width: 120px;
+  height: 32px;
+}
+
+.milk-option .quantity-control {
+  margin-left: 10px;
+  margin-top: 8px;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.qty-btn:hover {
+  background-color: #a57b5e;
+}
+
+.qty-btn:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.qty-input {
+  width: 40px;
+  height: 32px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  font-size: 14px;
+  margin: 0 5px;
+  padding: 0;
+  border-radius: 4px;
+}
+
+.quantity-control[style*="display: none"] + .milk-option {
+  display: none;
 }
 
 .milk-option {
