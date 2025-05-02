@@ -72,6 +72,28 @@ main {
   gap: 30px;
 }
 
+.order-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+@media (min-width: 992px) {
+  .order-layout {
+    grid-template-columns: 1fr 350px;
+    align-items: start;
+  }
+  
+  .stats-column {
+    position: sticky;
+    top: 30px;
+  }
+}
+
+.order-column, .stats-column {
+  width: 100%;
+}
+
 @media (min-width: 768px) {
   main {
     grid-template-columns: 1fr 1fr;
