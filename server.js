@@ -63,10 +63,10 @@ const db = new sqlite3.Database(dbPath, (err) => {
           const menuItems = [
             'Hot Black Coffee', 
             'Hot White Coffee', 
+            'Hot White Coffee with Oat Milk',
             'Iced Black Coffee', 
             'Iced White Coffee',
-            'Hot White Coffee (Oat Milk)',
-            'Iced White Coffee (Oat Milk)'
+            'Iced White Coffee with Oat Milk'
           ];
           
           // Use a prepared statement for inserting menu items
