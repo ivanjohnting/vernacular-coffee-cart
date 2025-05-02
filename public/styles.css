@@ -288,6 +288,15 @@ section {
   margin-bottom: 12px;
 }
 
+.customer-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(46, 125, 50, 0.3);
+}
+
 .order-items {
   list-style-type: none;
   margin-bottom: 16px;

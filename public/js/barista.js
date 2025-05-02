@@ -260,6 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
         orderElement.innerHTML = `
             <div class="order-id">Order #${order.id}</div>
             <div class="order-time">${formatTime(timestamp)}</div>
+            ${order.customer_name ? `<div class="customer-name">Customer: ${order.customer_name}</div>` : ''}
             <ul class="order-items">
                 ${orderItems.map(item => `<li>${item}</li>`).join('')}
             </ul>

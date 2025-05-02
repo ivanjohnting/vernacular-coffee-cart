@@ -38,6 +38,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
       db.run(`CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         order_items TEXT NOT NULL,
+        customer_name TEXT,
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
         status TEXT DEFAULT 'pending'
       )`, (err) => {
@@ -121,13 +122,14 @@ app.get('/api/counts', (req, res) => {
 
 app.post('/api/orders', (req, res) => {
   const orderItems = req.body.items;
+  const customerName = req.body.customerName;
   
   if (!orderItems || orderItems.length === 0) {
     res.status(400).json({ error: 'Order items are required' });
     return;
   }
 
-  db.run(`INSERT INTO orders (order_items) VALUES (?)`, [JSON.stringify(orderItems)], function(err) {
+  db.run(`INSERT INTO orders (order_items, customer_name) VALUES (?, ?)`, [JSON.stringify(orderItems), customerName], function(err) {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -144,6 +146,7 @@ app.post('/api/orders', (req, res) => {
     const orderData = {
       id: orderId,
       order_items: orderItems,
+      customer_name: customerName,
       timestamp: new Date().toISOString(),
       status: 'pending'
     };

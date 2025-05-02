@@ -17,97 +17,91 @@
         </header>
 
         <main>
-            <section class="order-section">
-                <h2>New Order</h2>
-                <form id="order-form">
-                    <div class="menu-items">
+            <form id="order-form">
+                <section>
+                    <h2>Choose Your Coffee</h2>
+                    <div class="menu-items" id="coffee-items">
                         <div class="menu-item">
                             <div class="menu-item-header">
-                                <input type="checkbox" id="hot-black" name="hot-black" value="Hot Black Coffee">
+                                <input type="checkbox" id="hot-black" name="coffeeType" value="Hot Black Coffee">
                                 <label for="hot-black">Hot Black Coffee</label>
                             </div>
-                            <div class="quantity-control" data-for="hot-black">
-                                <button type="button" class="qty-btn qty-decrease">-</button>
-                                <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
-                                <button type="button" class="qty-btn qty-increase">+</button>
+                            <div class="quantity-control" id="hot-black-quantity" style="display: none;">
+                                <button type="button" class="qty-btn minus" data-item="hot-black">−</button>
+                                <input type="number" class="qty-input" id="hot-black-qty" value="1" min="1" max="5" readonly>
+                                <button type="button" class="qty-btn plus" data-item="hot-black">+</button>
                             </div>
                         </div>
-                        
+
                         <div class="menu-item">
                             <div class="menu-item-header">
-                                <input type="checkbox" id="hot-white" name="hot-white" value="Hot White Coffee">
+                                <input type="checkbox" id="hot-white" name="coffeeType" value="Hot White Coffee">
                                 <label for="hot-white">Hot White Coffee</label>
                             </div>
-                            <div class="quantity-control" data-for="hot-white">
-                                <button type="button" class="qty-btn qty-decrease">-</button>
-                                <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
-                                <button type="button" class="qty-btn qty-increase">+</button>
-                            </div>
-                            <div class="milk-option">
-                                <input type="checkbox" id="hot-white-oat" name="hot-white-oat" value="Hot White Coffee (Oat Milk)">
-                                <label for="hot-white-oat">Oat Milk</label>
-                                <div class="quantity-control" data-for="hot-white-oat">
-                                    <button type="button" class="qty-btn qty-decrease">-</button>
-                                    <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
-                                    <button type="button" class="qty-btn qty-increase">+</button>
-                                </div>
+                            <div class="quantity-control" id="hot-white-quantity" style="display: none;">
+                                <button type="button" class="qty-btn minus" data-item="hot-white">−</button>
+                                <input type="number" class="qty-input" id="hot-white-qty" value="1" min="1" max="5" readonly>
+                                <button type="button" class="qty-btn plus" data-item="hot-white">+</button>
                             </div>
                         </div>
                         
                         <div class="menu-item">
                             <div class="menu-item-header">
-                                <input type="checkbox" id="iced-black" name="iced-black" value="Iced Black Coffee">
+                                <input type="checkbox" id="hot-white-oat" name="coffeeType" value="Hot White Coffee with Oat Milk">
+                                <label for="hot-white-oat">Hot White Coffee with Oat Milk</label>
+                            </div>
+                            <div class="quantity-control" id="hot-white-oat-quantity" style="display: none;">
+                                <button type="button" class="qty-btn minus" data-item="hot-white-oat">−</button>
+                                <input type="number" class="qty-input" id="hot-white-oat-qty" value="1" min="1" max="5" readonly>
+                                <button type="button" class="qty-btn plus" data-item="hot-white-oat">+</button>
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <input type="checkbox" id="iced-black" name="coffeeType" value="Iced Black Coffee">
                                 <label for="iced-black">Iced Black Coffee</label>
                             </div>
-                            <div class="quantity-control" data-for="iced-black">
-                                <button type="button" class="qty-btn qty-decrease">-</button>
-                                <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
-                                <button type="button" class="qty-btn qty-increase">+</button>
+                            <div class="quantity-control" id="iced-black-quantity" style="display: none;">
+                                <button type="button" class="qty-btn minus" data-item="iced-black">−</button>
+                                <input type="number" class="qty-input" id="iced-black-qty" value="1" min="1" max="5" readonly>
+                                <button type="button" class="qty-btn plus" data-item="iced-black">+</button>
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="menu-item-header">
+                                <input type="checkbox" id="iced-white" name="coffeeType" value="Iced White Coffee">
+                                <label for="iced-white">Iced White Coffee</label>
+                            </div>
+                            <div class="quantity-control" id="iced-white-quantity" style="display: none;">
+                                <button type="button" class="qty-btn minus" data-item="iced-white">−</button>
+                                <input type="number" class="qty-input" id="iced-white-qty" value="1" min="1" max="5" readonly>
+                                <button type="button" class="qty-btn plus" data-item="iced-white">+</button>
                             </div>
                         </div>
                         
                         <div class="menu-item">
                             <div class="menu-item-header">
-                                <input type="checkbox" id="iced-white" name="iced-white" value="Iced White Coffee">
-                                <label for="iced-white">Iced White Coffee</label>
+                                <input type="checkbox" id="iced-white-oat" name="coffeeType" value="Iced White Coffee with Oat Milk">
+                                <label for="iced-white-oat">Iced White Coffee with Oat Milk</label>
                             </div>
-                            <div class="quantity-control" data-for="iced-white">
-                                <button type="button" class="qty-btn qty-decrease">-</button>
-                                <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
-                                <button type="button" class="qty-btn qty-increase">+</button>
-                            </div>
-                            <div class="milk-option">
-                                <input type="checkbox" id="iced-white-oat" name="iced-white-oat" value="Iced White Coffee (Oat Milk)">
-                                <label for="iced-white-oat">Oat Milk</label>
-                                <div class="quantity-control" data-for="iced-white-oat">
-                                    <button type="button" class="qty-btn qty-decrease">-</button>
-                                    <input type="number" class="qty-input" value="1" min="1" max="10" readonly>
-                                    <button type="button" class="qty-btn qty-increase">+</button>
-                                </div>
+                            <div class="quantity-control" id="iced-white-oat-quantity" style="display: none;">
+                                <button type="button" class="qty-btn minus" data-item="iced-white-oat">−</button>
+                                <input type="number" class="qty-input" id="iced-white-oat-qty" value="1" min="1" max="5" readonly>
+                                <button type="button" class="qty-btn plus" data-item="iced-white-oat">+</button>
                             </div>
                         </div>
                     </div>
+                </section>
 
-                    <button type="submit" class="submit-btn">Place Order</button>
-                </form>
-            </section>
+                <section>
+                    <h2>Your Name</h2>
+                    <input type="text" id="customer-name" name="customerName" placeholder="Enter your name" required>
+                </section>
 
-            <section class="stats-section">
-                <h2>Order Statistics</h2>
-                <div id="order-counts" class="order-counts">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Coffee Type</th>
-                                <th>Count</th>
-                            </tr>
-                        </thead>
-                        <tbody id="counts-table-body">
-                            <!-- Counts will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+                <button type="submit" class="submit-btn">Place Order</button>
+            </form>
         </main>
 
         <footer>
@@ -116,11 +110,11 @@
         </footer>
     </div>
 
-    <div id="order-confirmation" class="modal">
+    <div id="confirmation-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Order Placed!</h2>
-            <p>Your order has been sent to the barista.</p>
+            <h2>Thank You!</h2>
+            <p>Your order has been placed and the barista will prepare it shortly.</p>
         </div>
     </div>
 
